@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Super Category Distribution Calendar System</title>
+
+
+</head>
+<style>
+html,body,div{
+  height: 100%;
+  margin:0;
+  padding:0;
+}
+.cal-day-grid, .cal-month-grid{
+
+  text-align: center;
+  font-weight: bold;
+  height: 49%;
+  border:1px solid #000 !important;
+}
+..cal-day-grid{
+  width:30%;
+  float:left;
+}
+.cal-month-grid{
+  width:100%;
+  border: none !important;
+  margin: 1rem;
+  height:50%;
+  page-break-before: always;
+}
+
+.page-break-class{
+    page-break-after: always;
+}
+
+.cal-month-grid h1{
+  text-decoration: underline;
+  text-transform: uppercase;;
+}
+.whole-cal{
+  margin: 0 auto;
+
+}
+.date-small{
+  font-size:1rem;
+  text-decoration: underline;
+}
+</style>
+<body>
+
+    <div class="pure-g whole-cal">
+
+<% cell_counter = 1 %>
+  <% while start_date < end_date %>
+  <% if start_date.mon > (start_date - 1).mon %>
+  <div class="pure-u-1-1 cal-month-grid">
+    <h1><%= start_date.strftime('<br>%B %Y<br>')%><br>Notes</h1>
+  </div>
+  <%end%>
+
+  <div class="pure-u-lg-3-24 cal-day-grid <% if  !( start_date.mon > (start_date - 1).mon) and (cell_counter % 2 == 0) then %> page-break-class <% end %>">
+
+    <h2>
+      <%=start_date.strftime('%A <br> <span class="date-small">%d %B %Y</span>')%>
+
+    </h2>
+    <% if cal_topics.key?(start_date.to_s) %>
+      <h1><%= cal_topics[start_date.to_s] %></h1>
+    <% end %>
+
+  </div>
+
+  <% start_date +=  1 %>
+  <% cell_counter+= 1 %>
+  <% end %>
+    </div>
+
+</body>
+</html>
